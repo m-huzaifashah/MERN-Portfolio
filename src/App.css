@@ -1,0 +1,102 @@
+.app-nav {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  /* Ensure high z-index for mobile dropdown */
+  padding: 1rem 2rem;
+  width: calc(100% - 2rem);
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-logo {
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  z-index: 1001;
+  /* Keep logo above mobile menu bg */
+}
+
+.nav-links {
+  display: none;
+  /* Mobile first: hide links */
+  gap: 2rem;
+}
+
+/* Desktop Navigation */
+@media (min-width: 768px) {
+  .nav-links {
+    display: flex;
+  }
+}
+
+.nav-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  /* Touch target on mobile */
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-btn {
+  display: block;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  z-index: 1001;
+  /* Keep above mobile menu bg */
+}
+
+@media (min-width: 768px) {
+  .mobile-menu-btn {
+    display: none;
+    /* Hide toggle on desktop */
+  }
+}
+
+/* Mobile Menu Dropdown */
+.mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 1rem;
+  background: var(--surface-color);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+
+.mobile-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.app-footer {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-color);
+  margin-top: 4rem;
+}

@@ -1,0 +1,27 @@
+.text-type-wrapper {
+    display: inline-block;
+    white-space: pre-wrap;
+}
+
+.text-type-cursor {
+    display: inline-block;
+    margin-left: 0.1em;
+    font-weight: 300;
+    opacity: 1;
+}
+
+.text-type-cursor.blinking {
+    animation: blink-cursor 1s step-end infinite;
+}
+
+@keyframes blink-cursor {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
