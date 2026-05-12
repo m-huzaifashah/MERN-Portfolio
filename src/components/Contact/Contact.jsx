@@ -1,40 +1,44 @@
-import React, { useState, useRef } from 'react';
-import emailjs from '@emailjs/browser';
+import React, { useState } from 'react';
 import { Mail, Github, Linkedin, Send, CheckCircle, AlertCircle, Loader } from 'lucide-react';
 import './Contact.css';
 
-// ─── EmailJS credentials ───────────────────────────────────────────────────
-// Replace these three values with your own from https://www.emailjs.com/
-const EMAILJS_SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID  || 'YOUR_SERVICE_ID';
-const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID';
-const EMAILJS_PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY  || 'YOUR_PUBLIC_KEY';
-// ──────────────────────────────────────────────────────────────────────────
+// Uses Netlify Forms — no API keys, no third-party service needed.
+// Submissions appear in: Netlify Dashboard → Your Site → Forms
 
 const Contact = () => {
-    const formRef = useRef(null);
-    const [formData, setFormData]   = useState({ name: '', email: '', message: '' });
-    const [status, setStatus]       = useState(null); // 'loading' | 'success' | 'error'
-    const [errorMsg, setErrorMsg]   = useState('');
+    const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+    const [status, setStatus]     = useState(null); // 'loading' | 'success' | 'error'
+    const [errorMsg, setErrorMsg] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setStatus('loading');
         setErrorMsg('');
 
+        const body = new URLSearchParams({
+            'form-name': 'contact',
+            name:        formData.name,
+            email:       formData.email,
+            message:     formData.message,
+        }).toString();
+
         try {
-            await emailjs.sendForm(
-                EMAILJS_SERVICE_ID,
-                EMAILJS_TEMPLATE_ID,
-                formRef.current,
-                EMAILJS_PUBLIC_KEY
-            );
-            setStatus('success');
-            setFormData({ name: '', email: '', message: '' });
-            // Auto-clear success banner after 5 s
-            setTimeout(() => setStatus(null), 5000);
+            const res = await fetch('/', {
+                method:  'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body,
+            });
+
+            if (res.ok) {
+                setStatus('success');
+                setFormData({ name: '', email: '', message: '' });
+                setTimeout(() => setStatus(null), 5000);
+            } else {
+                throw new Error(`Server responded with ${res.status}`);
+            }
         } catch (err) {
-            console.error('EmailJS error:', err);
-            setErrorMsg(err?.text || 'Something went wrong. Please try again.');
+            console.error('Form error:', err);
+            setErrorMsg('Something went wrong. Please try again or email me directly.');
             setStatus('error');
         }
     };
@@ -72,8 +76,16 @@ const Contact = () => {
                     </div>
                 </div>
 
-                {/* Contact Form */}
-                <form ref={formRef} onSubmit={handleSubmit} className="glass contact-form">
+                {/* Contact Form — data-netlify="true" registers it with Netlify Forms */}
+                <form
+                    name="contact"
+                    method="POST"
+                    data-netlify="true"
+                    onSubmit={handleSubmit}
+                    className="glass contact-form"
+                >
+                    {/* Required hidden field so Netlify knows which form this is */}
+                    <input type="hidden" name="form-name" value="contact" />
 
                     {/* Status banners */}
                     {status === 'success' && (
@@ -94,7 +106,7 @@ const Contact = () => {
                         <input
                             type="text"
                             id="name"
-                            name="from_name"
+                            name="name"
                             required
                             value={formData.name}
                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -108,7 +120,7 @@ const Contact = () => {
                         <input
                             type="email"
                             id="email"
-                            name="reply_to"
+                            name="email"
                             required
                             value={formData.email}
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
