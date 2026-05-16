@@ -4,18 +4,11 @@ import { Float, PerspectiveCamera, Html, RoundedBox } from '@react-three/drei';
 
 const LogoTile = ({ position, rotation, scale, color, iconUrl, title, imgWidth = '80px', imgHeight = '80px' }) => {
   const mesh = useRef();
-  
-  useFrame((state, delta) => {
-    if (mesh.current) {
-      mesh.current.rotation.x += delta * 0.2;
-      mesh.current.rotation.y += delta * 0.3;
-    }
-  });
 
   return (
-    <Float speed={2} rotationIntensity={1.5} floatIntensity={2}>
+    <Float speed={1.5} rotationIntensity={0.5} floatIntensity={1.5}>
       <group position={position} scale={scale}>
-        <RoundedBox ref={mesh} args={[2, 2, 0.2]} radius={0.15} smoothness={4} rotation={rotation}>
+        <RoundedBox ref={mesh} args={[2, 2, 0.2]} radius={0.15} smoothness={1} rotation={rotation}>
           <meshStandardMaterial 
             color={color} 
             roughness={0.1} 
@@ -25,16 +18,10 @@ const LogoTile = ({ position, rotation, scale, color, iconUrl, title, imgWidth =
             transparent
             opacity={0.75}
           />
-          {/* Front face HTML logo with neon glow */}
+          {/* Front face HTML logo with single optimized neon glow */}
           <Html transform position={[0, 0, 0.11]} center distanceFactor={10} style={{ pointerEvents: 'none' }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '150px', height: '150px' }}>
-              <img src={iconUrl} alt={title} style={{ width: imgWidth, height: imgHeight, objectFit: 'contain', filter: `drop-shadow(0 0 15px ${color}) drop-shadow(0 4px 6px rgba(0,0,0,0.5))` }} />
-            </div>
-          </Html>
-          {/* Back face HTML logo */}
-          <Html transform position={[0, 0, -0.11]} rotation={[0, Math.PI, 0]} center distanceFactor={10} style={{ pointerEvents: 'none' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '150px', height: '150px' }}>
-              <img src={iconUrl} alt={title} style={{ width: imgWidth, height: imgHeight, objectFit: 'contain', filter: `drop-shadow(0 0 15px ${color}) drop-shadow(0 4px 6px rgba(0,0,0,0.5))` }} />
+              <img src={iconUrl} alt={title} style={{ width: imgWidth, height: imgHeight, objectFit: 'contain', filter: `drop-shadow(0 0 10px ${color})` }} />
             </div>
           </Html>
         </RoundedBox>
