@@ -142,7 +142,7 @@ const Scene = () => {
 
 const CanvasBackground = () => {
   return (
-    <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: -1, pointerEvents: 'none', backgroundColor: 'var(--bg-color)' }}>
+    <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 0, pointerEvents: 'none', backgroundColor: 'var(--bg-color)' }}>
       <Canvas 
         dpr={1} 
         gl={{ powerPreference: "default", antialias: false, stencil: false, depth: true }}

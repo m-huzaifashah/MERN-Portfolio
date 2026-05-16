@@ -37,7 +37,7 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
-  background-color: var(--bg-color);
+  background-color: transparent;
   overscroll-behavior-y: none;
   font-size: 16px;
 }
