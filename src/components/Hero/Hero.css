@@ -63,6 +63,7 @@
   top: 15%;
   width: 500px;
   height: 500px;
+  max-width: 100vw;
   background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 60%);
   filter: blur(60px);
   z-index: -1;
@@ -75,6 +76,7 @@
   bottom: 5%;
   width: 600px;
   height: 600px;
+  max-width: 100vw;
   background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 60%);
   filter: blur(70px);
   z-index: -1;
@@ -95,4 +97,17 @@
   width: 100%;
   height: 100%;
   opacity: 0.8;
+}
+
+@media (max-width: 479px) {
+  .hero-title {
+    font-size: clamp(2rem, 8vw, 4.5rem);
+  }
+  .hero-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero-buttons .btn {
+    width: 100%;
+  }
 }

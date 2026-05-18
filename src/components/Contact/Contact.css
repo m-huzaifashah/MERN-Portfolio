@@ -155,3 +155,18 @@ textarea.form-input {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+@media (max-width: 639px) {
+  .contact-form {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 479px) {
+  .contact-link {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

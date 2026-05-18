@@ -2,13 +2,17 @@ import React from 'react';
 import { ArrowRight, Code2, Download } from 'lucide-react';
 import TextType from '../TextType/TextType';
 import LightRays from '../LightRays';
+import StatusBadge from './StatusBadge';
 import './Hero.css';
 
 const Hero = () => {
     return (
         <section id="hero" className="section container hero-section">
             <div className="hero-content">
-                
+
+
+                {/* Status Badge */}
+                <StatusBadge />
 
                 {/* Screen Reader Only Heading */}
                 <h1 className="sr-only">Hi, I'm a MERN Stack Developer.</h1>

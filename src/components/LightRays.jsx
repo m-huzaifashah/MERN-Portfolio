@@ -245,7 +245,8 @@ void main() {
 
         renderer.dpr = Math.min(window.devicePixelRatio, 2);
 
-        const { clientWidth: wCSS, clientHeight: hCSS } = containerRef.current;
+        const wCSS = window.innerWidth;
+        const hCSS = window.innerHeight;
         renderer.setSize(wCSS, hCSS);
 
         const dpr = renderer.dpr;
@@ -359,7 +360,8 @@ void main() {
     u.noiseAmount.value = noiseAmount;
     u.distortion.value = distortion;
 
-    const { clientWidth: wCSS, clientHeight: hCSS } = containerRef.current;
+    const wCSS = window.innerWidth;
+    const hCSS = window.innerHeight;
     const dpr = renderer.dpr;
     const { anchor, dir } = getAnchorAndDir(raysOrigin, wCSS * dpr, hCSS * dpr);
     u.rayPos.value = anchor;

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Float, PerspectiveCamera, Html, RoundedBox } from '@react-three/drei';
 
 const LogoTile = ({ position, rotation, scale, color, iconUrl, title, imgWidth = '80px', imgHeight = '80px' }) => {
@@ -65,10 +65,28 @@ const Particles = () => {
   );
 };
 
+const ResizeHandler = () => {
+  const { gl, camera } = useThree();
+  React.useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      gl.setSize(width, height);
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, [gl, camera]);
+  return null;
+};
+
 const Scene = () => {
   return (
     <>
       <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={75} />
+      <ResizeHandler />
       
       <ambientLight intensity={0.4} />
       <directionalLight position={[10, 10, 10]} intensity={1.5} color="#8b5cf6" />

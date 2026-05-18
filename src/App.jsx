@@ -1,4 +1,4 @@
-import React, { useState, Suspense } from 'react';
+import React, { useState, Suspense, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import Hero from './components/Hero/Hero';
 import Skills from './components/Skills/Skills';
@@ -10,6 +10,10 @@ import './App.css';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    console.log('Scroll Width vs Window Inner Width:', document.documentElement.scrollWidth, window.innerWidth);
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -25,7 +29,7 @@ function App() {
       <div style={{ position: 'relative', zIndex: 1 }}>
         <nav className="glass app-nav">
           <div className="app-logo">
-            Portfolio<span className="heading-gradient">.</span>
+            Huzaifa Shah<span className="heading-gradient">.</span>
           </div>
 
           {/* Desktop Navigation */}
@@ -69,7 +73,7 @@ function App() {
         </main>
 
         <footer className="app-footer">
-          <p>© {new Date().getFullYear()} MERN Developer. Built with React & Vite.</p>
+          <p>© 2026 M. Huzaifa Shah. Built with React & Vite.</p>
         </footer>
       </div>
     </div>
